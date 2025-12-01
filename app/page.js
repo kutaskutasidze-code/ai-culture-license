@@ -2,145 +2,160 @@
 
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import Window95 from '@/components/Window95'
-import DesktopIcon from '@/components/DesktopIcon'
-import Taskbar from '@/components/Taskbar'
 import Link from 'next/link'
 
 export default function Home() {
-  const [openWindow, setOpenWindow] = useState(null)
+  const [hoveredItem, setHoveredItem] = useState(null)
+
+  const items = [
+    { id: 'avatars', icon: '👤', label: 'AVATARS', color: 'spray-pink', route: '/browse?type=avatars' },
+    { id: 'fashion', icon: '👔', label: 'FASHION', color: 'spray-green', route: '/browse?type=fashion' },
+    { id: 'music', icon: '🎵', label: 'MUSIC', color: 'spray-orange', route: '/browse?type=music' },
+  ]
 
   return (
-    <main className="h-screen w-screen bg-gradient-to-br from-win95-teal via-win95-blue to-black scanline vhs-noise overflow-hidden">
-      {/* Desktop Icons */}
-      <div className="p-8 grid grid-cols-1 gap-6 w-fit">
-        <DesktopIcon 
-          icon="👤" 
-          label="AVATARS"
-          onClick={() => setOpenWindow('avatars')}
+    <main className="min-h-screen gradient-mesh texture-overlay relative overflow-hidden">
+      {/* Floating Background Elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        <motion.div
+          className="absolute top-20 left-10 w-32 h-32 bg-spray-pink/10 rounded-full blur-3xl"
+          animate={{ x: [0, 50, 0], y: [0, 30, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         />
-        <DesktopIcon 
-          icon="👔" 
-          label="FASHION"
-          onClick={() => setOpenWindow('fashion')}
-        />
-        <DesktopIcon 
-          icon="🎵" 
-          label="MUSIC"
-          onClick={() => setOpenWindow('music')}
+        <motion.div
+          className="absolute bottom-20 right-10 w-40 h-40 bg-spray-green/10 rounded-full blur-3xl"
+          animate={{ x: [0, -30, 0], y: [0, 50, 0] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         />
       </div>
 
-      {/* Hero Text - Glitch Effect */}
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.3 }}
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-10"
-      >
-        <h1 
-          className="text-6xl md:text-8xl font-pixel mb-8 glitch text-neon-cyan"
-          data-text="LICENSE CULTURE"
+      {/* Hero Section */}
+      <div className="container mx-auto px-8 pt-32 pb-20 relative z-10">
+        {/* Retro Accent */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="retro-accent text-stone mb-8 text-center"
         >
-          LICENSE CULTURE
-        </h1>
-        <p className="text-2xl md:text-3xl font-pixel text-neon-pink mb-12 glitch" data-text="FOR AI">
-          FOR AI
-        </p>
-        
-        {/* CTA Buttons */}
-        <div className="flex gap-6 justify-center flex-wrap">
-          <Link href="/signup?type=provider">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="win95-button text-xl font-bold"
-            >
-              I CREATE CULTURE
-            </motion.button>
-          </Link>
-          <Link href="/signup?type=consumer">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="win95-button text-xl font-bold"
-            >
-              I USE CULTURE
-            </motion.button>
-          </Link>
+          AI CULTURE LICENSE v1.0
+        </motion.div>
+
+        {/* Main Headline with Graffiti Style */}
+        <motion.h1
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-6"
+        >
+          <span 
+            className="graffiti-text text-7xl md:text-9xl text-concrete-dark block mb-4"
+            data-text="LICENSE"
+          >
+            LICENSE
+          </span>
+          <span 
+            className="graffiti-text text-7xl md:text-9xl text-concrete-dark block"
+            data-text="CULTURE"
+          >
+            CULTURE
+          </span>
+        </motion.h1>
+
+        {/* Subheading - Clean Yeezy Style */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="text-center text-xl md:text-2xl text-stone font-light tracking-wide mb-20 max-w-2xl mx-auto"
+        >
+          For AI Generation
+        </motion.p>
+
+        {/* Floating 3D Product Categories */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-24 max-w-6xl mx-auto">
+          {items.map((item, index) => (
+            <Link href={item.route} key={item.id}>
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 + index * 0.1 }}
+                whileHover={{ y: -10, scale: 1.02 }}
+                onHoverStart={() => setHoveredItem(item.id)}
+                onHoverEnd={() => setHoveredItem(null)}
+                className="glass-card p-12 text-center cursor-pointer float-3d group relative"
+              >
+                {/* Spray Paint Accent */}
+                <div className={`absolute top-0 left-0 w-2 h-full bg-${item.color} spray-drip opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+                
+                {/* Icon */}
+                <div className="text-8xl mb-6 filter drop-shadow-lg">
+                  {item.icon}
+                </div>
+                
+                {/* Label */}
+                <h3 className="font-display text-2xl text-concrete-dark tracking-wide mb-2">
+                  {item.label}
+                </h3>
+                
+                {/* Hover Description */}
+                <motion.p
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ 
+                    opacity: hoveredItem === item.id ? 1 : 0,
+                    height: hoveredItem === item.id ? 'auto' : 0
+                  }}
+                  className="text-stone text-sm overflow-hidden"
+                >
+                  {item.id === 'avatars' && 'Celebrity likeness for AI'}
+                  {item.id === 'fashion' && 'Designer items licensed'}
+                  {item.id === 'music' && 'Artist tracks for generation'}
+                </motion.p>
+              </motion.div>
+            </Link>
+          ))}
         </div>
-      </motion.div>
 
-      {/* Windows */}
-      {openWindow === 'avatars' && (
-        <Window95
-          title="Celebrity Avatars"
-          onClose={() => setOpenWindow(null)}
+        {/* CTA Buttons - Minimal Yeezy Style */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+          className="flex flex-col md:flex-row gap-6 justify-center items-center"
         >
-          <div className="p-8">
-            <h2 className="text-2xl font-bold mb-4">360° Celebrity Avatars</h2>
-            <p className="mb-4">License verified celebrity likeness for AI-generated content.</p>
-            <div className="grid grid-cols-3 gap-4">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="win95-border-inset p-4 aspect-square bg-gray-200 flex items-center justify-center">
-                  <span className="text-4xl">👤</span>
-                </div>
-              ))}
-            </div>
-            <Link href="/browse?type=avatars">
-              <button className="win95-button mt-6 w-full">Browse All</button>
-            </Link>
-          </div>
-        </Window95>
-      )}
+          <Link href="/signup?type=provider">
+            <button className="yeezy-button w-64">
+              I Create Culture
+            </button>
+          </Link>
+          
+          <Link href="/signup?type=consumer">
+            <button className="yeezy-button w-64 bg-transparent border-2 border-concrete-dark text-concrete-dark hover:bg-concrete-dark hover:text-concrete-light">
+              I Use Culture
+            </button>
+          </Link>
+        </motion.div>
 
-      {openWindow === 'fashion' && (
-        <Window95
-          title="Designer Fashion"
-          onClose={() => setOpenWindow(null)}
+        {/* Legal Notice - Subtle */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+          className="mt-24 text-center max-w-3xl mx-auto"
         >
-          <div className="p-8">
-            <h2 className="text-2xl font-bold mb-4">Fashion Brand Items</h2>
-            <p className="mb-4">License designer pieces for AI fashion generation.</p>
-            <div className="grid grid-cols-3 gap-4">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="win95-border-inset p-4 aspect-square bg-gray-200 flex items-center justify-center">
-                  <span className="text-4xl">👔</span>
-                </div>
-              ))}
-            </div>
-            <Link href="/browse?type=fashion">
-              <button className="win95-button mt-6 w-full">Browse All</button>
-            </Link>
-          </div>
-        </Window95>
-      )}
+          <p className="text-stone text-sm leading-relaxed">
+            Solving IP rights for AI generation. Every purchase includes a legal license certificate 
+            proving commercial usage rights. Built for creators, by creators.
+          </p>
+        </motion.div>
+      </div>
 
-      {openWindow === 'music' && (
-        <Window95
-          title="Artist Music"
-          onClose={() => setOpenWindow(null)}
-        >
-          <div className="p-8">
-            <h2 className="text-2xl font-bold mb-4">Real Artist Music</h2>
-            <p className="mb-4">License tracks for AI music generation and remixes.</p>
-            <div className="space-y-2">
-              {['Track 1', 'Track 2', 'Track 3', 'Track 4', 'Track 5'].map((track, i) => (
-                <div key={i} className="win95-border p-3 bg-white flex items-center gap-3">
-                  <span className="text-2xl">🎵</span>
-                  <span>{track}</span>
-                </div>
-              ))}
-            </div>
-            <Link href="/browse?type=music">
-              <button className="win95-button mt-6 w-full">Browse All</button>
-            </Link>
-          </div>
-        </Window95>
-      )}
-
-      {/* Taskbar */}
-      <Taskbar />
+      {/* Minimal Footer */}
+      <footer className="absolute bottom-8 left-0 right-0">
+        <div className="container mx-auto px-8 flex justify-between items-center">
+          <span className="retro-accent text-stone">TBILISI 🇬🇪</span>
+          <span className="retro-accent text-stone">v1.0</span>
+        </div>
+      </footer>
     </main>
   )
 }

@@ -1,0 +1,142 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Windows 95 3D Border Effect */
+@layer components {
+  .win95-border {
+    border-top: 2px solid #ffffff;
+    border-left: 2px solid #ffffff;
+    border-right: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #808080;
+  }
+
+  .win95-border-inset {
+    border-top: 2px solid #808080;
+    border-left: 2px solid #808080;
+    border-right: 2px solid #dfdfdf;
+    border-bottom: 2px solid #dfdfdf;
+    box-shadow: inset -1px -1px 0 #ffffff, inset 1px 1px 0 #000000;
+  }
+
+  .win95-button {
+    @apply win95-border bg-win95-gray px-6 py-2 cursor-pointer select-none;
+  }
+
+  .win95-button:active {
+    @apply win95-border-inset;
+  }
+
+  .glitch {
+    position: relative;
+  }
+
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .glitch::before {
+    animation: glitch-1 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+    color: #ff00ff;
+    z-index: -1;
+  }
+
+  .glitch::after {
+    animation: glitch-2 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+    color: #00ffff;
+    z-index: -2;
+  }
+
+  @keyframes glitch-1 {
+    0%, 100% {
+      transform: translate(0);
+    }
+    33% {
+      transform: translate(-2px, 2px);
+    }
+    66% {
+      transform: translate(2px, -2px);
+    }
+  }
+
+  @keyframes glitch-2 {
+    0%, 100% {
+      transform: translate(0);
+    }
+    33% {
+      transform: translate(2px, -2px);
+    }
+    66% {
+      transform: translate(-2px, 2px);
+    }
+  }
+
+  .scanline {
+    position: relative;
+  }
+
+  .scanline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.15),
+      rgba(0, 0, 0, 0.15) 1px,
+      transparent 1px,
+      transparent 2px
+    );
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  .vhs-noise {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vhs-noise::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.05' /%3E%3C/svg%3E");
+    pointer-events: none;
+    animation: noise 0.2s infinite;
+  }
+
+  @keyframes noise {
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-5%, -5%); }
+    20% { transform: translate(-10%, 5%); }
+    30% { transform: translate(5%, -10%); }
+    40% { transform: translate(-5%, 15%); }
+    50% { transform: translate(-10%, 5%); }
+    60% { transform: translate(15%, 0); }
+    70% { transform: translate(0, 10%); }
+    80% { transform: translate(-15%, 0); }
+    90% { transform: translate(10%, 5%); }
+  }
+}
+
+body {
+  font-family: 'MS Sans Serif', Arial, sans-serif;
+  image-rendering: pixelated;
+}
+
+/* Custom cursor */
+* {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpath d='M0,0 L0,13 L4,9 L7,16 L9,15 L6,8 L11,8 Z' fill='white' stroke='black' stroke-width='0.5'/%3E%3C/svg%3E"), auto;
+}

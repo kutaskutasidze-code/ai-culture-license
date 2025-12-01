@@ -8,16 +8,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'win95-gray': '#c0c0c0',
-        'win95-blue': '#000080',
-        'win95-teal': '#008080',
-        'neon-pink': '#ff00ff',
-        'neon-cyan': '#00ffff',
-        'neon-green': '#00ff00',
-      },
-      fontFamily: {
-        'ms-sans': ['MS Sans Serif', 'Arial', 'sans-serif'],
-        'pixel': ['"Press Start 2P"', 'monospace'],
+        'monet-blue': '#a8c0d9',
+        'monet-lavender': '#c8b5d9',
+        'monet-cream': '#f5f0e8',
+        'monet-rose': '#f2d7d5',
+        'monet-mint': '#d4e8d4',
+        'monet-sand': '#e8dcc8',
       },
     },
   },
